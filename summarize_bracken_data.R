@@ -93,7 +93,7 @@ final_table <- long_format_data %>%
   ) %>% 
   arrange(sample, condition, method) %>%  # จัดเรียงข้อมูลก่อน pivot
   pivot_wider(
-    names_from = c(sample, condition, method),   # สร้าง column จากสองตัวนี้
+    names_from = c(condition, method, sample),   # สร้าง column จากสองตัวนี้
     values_from = percentage,
     values_fill = 0.0 # ถ้าไม่มีข้อมูลให้ใส่ 0
   ) %>%
@@ -163,11 +163,11 @@ composition_table_wide <- summary_composition %>%
   mutate(
     Unclassified = pmax(0, 100 - (`Host (Homo)` + Microbe))) %>% 
   select(sample, condition, method, `Host (Homo)`, Microbe, Unclassified) %>%
-  arrange(sample, condition, method)
+  arrange(condition, method, sample)
 
 # บันทึกไฟล์
 write_xlsx(
   composition_table_wide,
-  path = "Sample_Composition_Summary.xlsx"
+  path = "Sample_Composition_Summary02.xlsx"
 )
 
